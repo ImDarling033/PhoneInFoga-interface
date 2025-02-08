@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PhoneInfoga Interface</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body class="container mt-5">
+
+    
+
+    <h2 class="mb-4">Recherche de numéro</h2>
+    <div class="alert alert-info mt-4">
+        <form method="POST">
+            <label for="phoneNumber" class="form-label">Entrez un numéro :</label>
+            <input type="text" class="form-control mb-3" id="phoneNumber" name="phoneNumber" required>
+            
+            <!-- Conteneur Flexbox pour aligner les boutons -->
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-primary">🤖 Lancer l'analyse</button>
+            </form>
+            
+            <!-- Bouton Dark Mode -->
+            <button id="darkModeToggle" class="btn btn-secondary">🌙 Mode Sombre</button>
+
+            <form action="/shutdown" method="POST">
+                <button type="submit" class="btn btn-danger">👨‍💻 Arrêter le serveur</button>
+            </form>
+
+            </div>
+    </div>
+
+
+    {% if result %}
+    <div class="alert alert-success">
+        <h4>Résultat :</h4>
+        <pre>{{ result }}</pre>
+    </div>
+    {% endif %}
+
+
+    <!-- Historique des recherches -->
+    <div class="mt-4">
+        <h4>Historique des recherches</h4>
+        {% if history %}
+            <ul class="list-group">
+                {% for number in history %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <span id="textToCopy">{{ number }}</span>
+                    <button onclick="copyToClipboard()" class="btn btn-sm btn-outline-primary">📎 Copy</button>
+                </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="text-muted">Aucune recherche récente.</p>
+        {% endif %}
+    </div>
+
+    <script>
+        document.getElementById("shutdown-btn").addEventListener("click", function() {
+            fetch("/shutdown", { method: "POST" })
+                .then(response => {
+                    if (response.ok) {
+                        alert("Le serveur Flask est arrêté.");
+                        window.close();  // Ferme l'onglet (optionnel)
+                    }
+                })
+                .catch(error => console.error("Erreur lors de l'arrêt du serveur :", error));
+        });
+    </script>
+
+    <!-- Script Dark Mode -->
+    <script src="{{ url_for('static', filename='darkmode.js') }}"></script>
+
+    <script>
+        function copyToClipboard() {
+            const text = document.getElementById("textToCopy").innerText.trim();
+            navigator.clipboard.writeText(text).then(() => {
+                alert("Texte copié !");
+            }).catch(err => {
+                console.error("Erreur de copie :", err);
+            });
+        }
+    </script>
+</body>
+</html>

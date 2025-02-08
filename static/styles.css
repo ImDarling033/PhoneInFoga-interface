@@ -1,0 +1,39 @@
+/* Mode sombre */
+.dark-mode {
+    background-color: #121212;
+    color: #ffffff;
+}
+
+.dark-mode .alert {
+    background-color: #333;
+    color: #ffffff;
+    border-color: #555;
+}
+
+.dark-mode .btn-primary {
+    background-color: #1e88e5;
+    border-color: #1e88e5;
+}
+
+.dark-mode .btn-danger {
+    background-color: #d32f2f;
+    border-color: #d32f2f;
+}
+
+.dark-mode input, 
+.dark-mode textarea, 
+.dark-mode .list-group-item {
+    background-color: #222;
+    color: #fff;
+    border: 1px solid #555;
+}
+
+.dark-mode .btn-outline-primary {
+    color: #1e88e5;
+    border-color: #1e88e5;
+}
+
+.dark-mode .btn-outline-primary:hover {
+    background-color: #1e88e5;
+    color: white;
+}
