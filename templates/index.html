@@ -2,87 +2,156 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PhoneInfoga Interface</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-</head>
-<body class="container mt-5">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Phone Info</title>
+    <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='favicon.svg') }}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body.dark-mode {
+            background-color: #121212;
+            color: white;
+        }
+        .dark-mode .card {
+            background-color: #1e1e1e;
+            color: white;
+        }
+        .header-logo {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .header-logo svg {
+            width: 200px;
+            height: 200px;
+        }
 
+        .icon {
+        width: 100px;
+        height: 100px;
+        }
+    </style>
+</head>
+<body class="container mt-50">
     
 
-    <h2 class="mb-4">Recherche de numéro</h2>
-    <div class="alert alert-info mt-4">
-        <form method="POST">
-            <label for="phoneNumber" class="form-label">Entrez un numéro :</label>
-            <input type="text" class="form-control mb-3" id="phoneNumber" name="phoneNumber" required>
-            
-            <!-- Conteneur Flexbox pour aligner les boutons -->
-            <div class="d-flex gap-2">
-                <button type="submit" class="btn btn-primary">🤖 Lancer l'analyse</button>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <!-- Logo SVG Centré -->
+        <div class="icon">
+            <svg classe="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+                <path fill="none" stroke="#3F83F8" stroke-width="5" d="M20,20 h60 a5,5 0 0 1 5,5 v35 a5,5 0 0 1 -5,5 h-60 a5,5 0 0 1 -5,-5 v-35 a5,5 0 0 1 5,-5 z"/>
+                <path fill="none" stroke="#3F83F8" stroke-width="5" d="M35,40 l-8,8 l8,8 M65,40 l8,8 l-8,8"/>
+                <path fill="none" stroke="#3F83F8" stroke-width="5" d="M40,65 h20 l5,10 h-30 z"/>
+                <path fill="none" stroke="#3F83F8" stroke-width="5" d="M70,75 q5,0 5,5 q0,5 -5,5 q-5,0 -5,-5 q0,-5 5,-5"/>
+                <circle fill="#3F83F8" cx="70" cy="25" r="1.5"/>
+                <circle fill="#3F83F8" cx="75" cy="25" r="1.5"/>
+                <circle fill="#3F83F8" cx="80" cy="25" r="1.5"/>
+            </svg>        
+        </div>
+        <h1 class="text-primary">Phone Info</h1>
+        <div>
+            <button class="btn btn-dark me-2" id="toggleDarkMode">🌙 Mode Sombre</button>
+            <form action="/shutdown" method="POST" class="d-inline">
+                <button type="submit" class="btn btn-danger">⛔ Arrêter le serveur</button>
             </form>
-            
-            <!-- Bouton Dark Mode -->
-            <button id="darkModeToggle" class="btn btn-secondary">🌙 Mode Sombre</button>
+        </div>
+    </div>
 
-            <form action="/shutdown" method="POST">
-                <button type="submit" class="btn btn-danger">👨‍💻 Arrêter le serveur</button>
-            </form>
-
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card p-3 shadow-sm">
+                <h3 class="text-secondary">📜 Historique</h3>
+                <input type="text" id="searchHistory" class="form-control mb-2" placeholder="Rechercher...">
+                <table class="table table-striped mt-3">
+                    <thead>
+                        <tr>
+                            <th>Numéro</th>
+                            <th>Action</th>
+                            <th>Copier</th>
+                        </tr>
+                    </thead>
+                    <tbody id="historyTable">
+                        {% for num in history %}
+                            <tr>
+                                <td>{{ num }}</td>
+                                <td>
+                                    <a href="{{ url_for('index', phoneNumber=num) }}" class="btn btn-sm btn-outline-primary">🔍 Rechercher</a>
+                                </td>
+                                <td>
+                                    <button onclick="copyToClipboard('{{ num }}')" class="btn btn-sm btn-outline-secondary">📎 Copier</button>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
             </div>
-    </div>
+        </div>
 
+        <div class="col-md-8">
+            <div class="card p-4 shadow-sm">
+                <h3 class="text-secondary">📞 Entrez un numéro :</h3>
+                <form method="POST" class="mt-3 d-flex">
+                    <input type="text" class="form-control me-2" id="phoneNumber" name="phoneNumber" placeholder="+33712345678" required>
+                    <button type="submit" class="btn btn-primary">Lancer l'analyse</button>
+                </form>
+            </div>
 
-    {% if result %}
-    <div class="alert alert-success">
-        <h4>Résultat :</h4>
-        <pre>{{ result }}</pre>
-    </div>
-    {% endif %}
-
-
-    <!-- Historique des recherches -->
-    <div class="mt-4">
-        <h4>Historique des recherches</h4>
-        {% if history %}
-            <ul class="list-group">
-                {% for number in history %}
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <span id="textToCopy">{{ number }}</span>
-                    <button onclick="copyToClipboard()" class="btn btn-sm btn-outline-primary">📎 Copy</button>
-                </li>
-                {% endfor %}
-            </ul>
-        {% else %}
-            <p class="text-muted">Aucune recherche récente.</p>
-        {% endif %}
+            <div class="mt-4">
+                {% if result %}
+                    <div class="alert alert-info p-3">
+                        <h4>📜 Résultats :</h4>
+                        <pre id="resultText">{{ result | safe }}</pre>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
     </div>
 
     <script>
-        document.getElementById("shutdown-btn").addEventListener("click", function() {
-            fetch("/shutdown", { method: "POST" })
-                .then(response => {
-                    if (response.ok) {
-                        alert("Le serveur Flask est arrêté.");
-                        window.close();  // Ferme l'onglet (optionnel)
-                    }
-                })
-                .catch(error => console.error("Erreur lors de l'arrêt du serveur :", error));
+        document.getElementById("toggleDarkMode").addEventListener("click", function() {
+            document.body.classList.toggle("dark-mode");
         });
-    </script>
 
-    <!-- Script Dark Mode -->
-    <script src="{{ url_for('static', filename='darkmode.js') }}"></script>
-
-    <script>
-        function copyToClipboard() {
-            const text = document.getElementById("textToCopy").innerText.trim();
+        function copyToClipboard(text) {
             navigator.clipboard.writeText(text).then(() => {
-                alert("Texte copié !");
+                alert("Numéro copié : " + text);
             }).catch(err => {
                 console.error("Erreur de copie :", err);
             });
         }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            let resultText = document.getElementById("resultText");
+            if (resultText) {
+                let text = resultText.innerHTML;
+                let urlRegex = /(https?:\/\/[^\s]+)/g;
+                
+                resultText.innerHTML = text.replace(urlRegex, function(url) {
+                    let buttonText = "🔗 Lien";
+                    
+                    try {
+                        let match = url.match(/search\?q=site%3A([^%]+)%3A/);
+                        if (match && match[1]) {
+                            buttonText = `🔍 ${decodeURIComponent(match[1])}`;
+                        }
+                    } catch (e) {
+                        console.error("Erreur lors de l'extraction du nom du lien :", e);
+                    }
+
+                    return `<a href="${url}" target="_blank" class="btn btn-sm btn-success">${buttonText}</a>`;
+                });
+            }
+        });
+
+        document.getElementById("searchHistory").addEventListener("input", function() {
+            let filter = this.value.toLowerCase();
+            let rows = document.querySelectorAll("#historyTable tr");
+            rows.forEach(row => {
+                let text = row.cells[0].textContent.toLowerCase();
+                row.style.display = text.includes(filter) ? "" : "none";
+            });
+        });
     </script>
 </body>
 </html>
