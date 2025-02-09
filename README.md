@@ -1,8 +1,5 @@
----
-ENG-🇬🇧
----
 
-# PhoneInFoga-interface
+# PhoneInFoga-interface [ENG-🇬🇧]
 
 ## 📌 Table of Contents
 - [🌳 Structure](#-structure)
@@ -71,15 +68,13 @@ This project is a graphical interface for **[PhoneInfoga](https://github.com/sun
   - Verify that `phoneinfoga.exe` is correctly placed in the root folder.
   - Try another number, as some may not have available data.
 
----
+
 
 💡 **Future Improvements:** Adding a logging system and better error handling.
 
 ---
-FR-🇫🇷
----
 
-# PhoneInFoga-interface
+# PhoneInFoga-interface [FR-🇫🇷]
 
 ## 📌 Table des Matières
 - [🌳 Représentation](#-représentation)
