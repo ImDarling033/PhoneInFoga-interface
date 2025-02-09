@@ -1,3 +1,84 @@
+---
+ENG-🇬🇧
+---
+
+# PhoneInFoga-interface
+
+## 📌 Table of Contents
+- [🌳 Structure](#-structure)
+- [👨‍💻 Instructions](#-instructions)
+- [🛠 Dependencies](#-dependencies)
+- [🚀 Usage](#-usage)
+- [🔗 Original Project](#-original-project)
+- [❓ Issues and Solutions](#-issues-and-solutions)
+
+## 🌳 Structure
+
+##### File tree representation.
+
+```md
+INTERFACE PHONEINFOGO
+├── static
+│   ├── bootstrap.min.css
+│   ├── darkmode.js
+│   └── styles.css
+├── templates
+│   ├── index.html
+│   └── shutdown.html
+├── app.py
+├── history.json
+├── phoneinfoga.exe
+├── setup.bat
+└── start.bat
+```
+
+## 👨‍💻 Instructions
+
+### Installation
+1. Download **[PhoneInfoga](https://github.com/sundowndev/PhoneInfoga)**.
+2. Place the `phoneinfoga.exe` executable in the **root folder** of the project.
+3. Run **setup.bat**, which will install the necessary dependencies.
+4. Launch **start.bat** to start the interface.
+
+##### ⚠️ DO NOT CLOSE THE TWO TERMINALS DURING EXECUTION
+
+## 🛠 Dependencies
+- Python 3.x
+- Flask
+- Bootstrap
+- jQuery
+
+## 🚀 Usage
+
+1. Open a browser and go to `http://127.0.0.1:5000`
+2. Enter a phone number to retrieve information.
+3. Check the search history and easily copy numbers.
+4. Dark mode available with the 🌙 button.
+
+## 🔗 Original Project
+
+This project is a graphical interface for **[PhoneInfoga](https://github.com/sundowndev/PhoneInfoga)**, an open-source phone number intelligence tool.
+
+[![GitHub](https://img.shields.io/badge/GitHub-PhoneInfoga-blue?logo=github)](https://github.com/sundowndev/PhoneInfoga)
+
+## ❓ Issues and Solutions
+
+- **Issue: Flask does not start**
+  - Check that Python is installed and accessible in the system PATH.
+  - Ensure that `setup.bat` has installed all required dependencies.
+
+- **Issue: No results for a number**
+  - Verify that `phoneinfoga.exe` is correctly placed in the root folder.
+  - Try another number, as some may not have available data.
+
+---
+
+💡 **Future Improvements:** Adding a logging system and better error handling.
+
+---
+FR-🇫🇷
+---
+
 # PhoneInFoga-interface
 
 ## 📌 Table des Matières
