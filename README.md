@@ -68,7 +68,7 @@ This project is a graphical interface for **[PhoneInfoga](https://github.com/sun
   - Verify that `phoneinfoga.exe` is correctly placed in the root folder.
   - Try another number, as some may not have available data.
 
-
+---
 
 💡 **Future Improvements:** Adding a logging system and better error handling.
 
