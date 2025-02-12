@@ -47,7 +47,7 @@ INTERFACE PHONEINFOGO
 
 ## 🚀 Usage
 
-1. Open a browser and go to `http://127.0.0.1:5000`
+1. Open a browser and go to `http://127.0.0.1:5001`
 2. Enter a phone number to retrieve information.
 3. Check the search history and easily copy numbers.
 4. Dark mode available with the 🌙 button.
@@ -122,7 +122,7 @@ INTERFACE PHONEINFOGO
 
 ## 🚀 Utilisation
 
-1. Ouvrez un navigateur et accédez à `http://127.0.0.1:5000`
+1. Ouvrez un navigateur et accédez à `http://127.0.0.1:5001`
 2. Entrez un numéro de téléphone pour obtenir des informations.
 3. Consultez l'historique des recherches et copiez facilement les numéros.
 4. Mode sombre disponible avec le bouton 🌙.
